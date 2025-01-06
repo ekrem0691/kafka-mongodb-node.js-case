@@ -1,0 +1,74 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      # 1) Kodu checkout et
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # 2) Docker için login (Docker Hub örneği)
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      # 3) Producer image build & push
+      - name: Build & Push Producer
+        run: |
+          docker build \
+            -f ./producer/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/producer:latest \
+            ./producer
+          docker push ${{ secrets.DOCKER_USERNAME }}/producer:latest
+
+      # 4) Consumer image build & push
+      - name: Build & Push Consumer
+        run: |
+          docker build \
+            -f ./consumer/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/consumer:latest \
+            ./consumer
+          docker push ${{ secrets.DOCKER_USERNAME }}/consumer:latest
+
+      # 5) API image build & push
+      - name: Build & Push API
+        run: |
+          docker build \
+            -f ./api/Dockerfile \
+            -t ${{ secrets.DOCKER_USERNAME }}/api:latest \
+            ./api
+          docker push ${{ secrets.DOCKER_USERNAME }}/api:latest
+
+      # 6) Helm CLI yükle (alternatif: azure/setup-helm vs. kullanılabilir)
+      - name: Install Helm
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+      # 7) Kubeconfig oluştur (Secrets: KUBE_CONFIG_DATA)
+      - name: Set up kubeconfig
+        shell: bash
+        env:
+          KUBECONFIG_ENCODED: ${{ secrets.KUBECONFIG }}
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${KUBECONFIG_ENCODED}" | base64 --decode > $HOME/.kube/config
+          kubectl cluster-info
+
+      # 8) Helm upgrade/install
+      - name: Helm Upgrade
+        run: |
+          # Tag'ler values.yaml'da "image: <DOCKER_HUB_USER>/producer:latest" şeklinde set edilebilir.
+          helm upgrade --install event-driven-app ./event-driven-app \
+            -n my-event-ns \
+            --set producer.image="${{ secrets.DOCKER_USERNAME }}/producer:latest" \
+            --set consumer.image="${{ secrets.DOCKER_USERNAME }}/consumer:latest" \
+            --set restApi.image="${{ secrets.DOCKER_USERNAME }}/api:latest"

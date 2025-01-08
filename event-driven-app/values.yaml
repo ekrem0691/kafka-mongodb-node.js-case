@@ -1,0 +1,27 @@
+replicaCount: 1
+
+producer:
+  image: "docker.io/ekrem0691/kafka-mongodb-nodejs-case_producer:latest"
+  kafkaBrokers: "kafka-service:9092"
+  kafkaClientId: "producer-app"
+  kafkaTopic: "events"
+
+consumer:
+  image: "docker.io/ekrem0691/kafka-mongodb-nodejs-case_consumer:latest"
+  kafkaBrokers: "kafka-service:9092"
+  kafkaClientId: "consumer-app"
+  kafkaGroupId: "consumer-group"
+  kafkaTopic: "events"
+  mongoUri: "mongodb://mongodb-service:27017"
+  mongoDbName: "eventsdb"
+  mongoCollection: "events"
+
+restApi:
+  image: "docker.io/ekrem0691/kafka-mongodb-nodejs-case_api:latest"
+  port: 3000
+  mongoUri: "mongodb://mongodb-service:27017"
+  mongoDbName: "eventsdb"
+  mongoCollection: "events"
+  kafkaBrokers: "kafka-service:9092"
+  kafkaClientId: "rest-api-client"
+  kafkaTopic: "events"

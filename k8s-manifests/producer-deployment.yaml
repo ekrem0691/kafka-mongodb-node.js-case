@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producer
+  labels:
+    app: producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: producer
+  template:
+    metadata:
+      labels:
+        app: producer
+    spec:
+      containers:
+      - name: producer
+        image: ekrem0691/producer:latest
+        env:
+        - name: KAFKA_BROKER
+          value: kafka-service:9092
+        - name: KAFKA_TOPIC
+          value: events_topic

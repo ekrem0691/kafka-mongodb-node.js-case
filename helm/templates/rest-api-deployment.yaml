@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rest-api
+  labels:
+    app: rest-api
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: rest-api
+  template:
+    metadata:
+      labels:
+        app: rest-api
+    spec:
+      containers:
+        - name: rest-api
+          image: "{{ .Values.restApi.image }}"
+          env:
+            - name: MONGO_URI
+              value: "{{ .Values.restApi.mongoUri }}"
+            - name: MONGO_DB_NAME
+              value: "{{ .Values.restApi.mongoDbName }}"
+            - name: MONGO_COLLECTION
+              value: "{{ .Values.restApi.mongoCollection }}"
+            - name: PORT
+              value: "{{ .Values.restApi.port }}"
+            - name: KAFKA_BROKERS
+              value: "{{ .Values.restApi.kafkaBrokers }}"
+            - name: KAFKA_CLIENT_ID
+              value: "{{ .Values.restApi.kafkaClientId }}"
+            - name: KAFKA_TOPIC
+              value: "{{ .Values.restApi.kafkaTopic }}"
+          ports:
+            - containerPort: {{ .Values.restApi.port }}

@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+  labels:
+    app: consumer
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: consumer
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer
+          image: "{{ .Values.consumer.image }}"
+          env:
+            - name: KAFKA_BROKERS
+              value: "kafka-service:9092"  # Kafka servis adı
+            - name: KAFKA_CLIENT_ID
+              value: "{{ .Values.consumer.kafkaClientId }}"
+            - name: KAFKA_GROUP_ID
+              value: "{{ .Values.consumer.kafkaGroupId }}"
+            - name: KAFKA_TOPIC
+              value: "{{ .Values.consumer.kafkaTopic }}"
+            - name: MONGO_URI
+              value: "{{ .Values.consumer.mongoUri }}"
+            - name: MONGO_DB_NAME
+              value: "{{ .Values.consumer.mongoDbName }}"
+            - name: MONGO_COLLECTION
+              value: "{{ .Values.consumer.mongoCollection }}"

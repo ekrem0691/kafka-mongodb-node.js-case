@@ -76,3 +76,47 @@ Bu proje, event-driven bir mimariyi uygulamak için tasarlanmıştır. Projede *
 
 ## 📂 Proje Dosya Yapısı
 
+kafka-mongodb-node.js-case/
+├── api/                         # REST API Servisi
+│   ├── Dockerfile               # API için Docker tanımı
+│   ├── index.js                 # API'nin ana dosyası
+│   ├── package.json             # API bağımlılık dosyası
+│   ├── package-lock.json
+│   └── node_modules/            # Bağımlılık modülleri
+├── consumer/                    # Kafka Consumer Servisi
+│   ├── Dockerfile               # Consumer için Docker tanımı
+│   ├── index.js                 # Consumer'ın ana dosyası
+│   ├── package.json             # Consumer bağımlılık dosyası
+│   ├── package-lock.json
+│   └── node_modules/            # Bağımlılık modülleri
+├── producer/                    # Kafka Producer Servisi
+│   ├── Dockerfile               # Producer için Docker tanımı
+│   ├── index.js                 # Producer'ın ana dosyası
+│   ├── package.json             # Producer bağımlılık dosyası
+│   ├── package-lock.json
+│   └── node_modules/            # Bağımlılık modülleri
+├── kafka/                       # Helm Chart Yapılandırmaları
+│   ├── templates/               # Kubernetes Manifest Dosyaları
+│   │   ├── api-deployment.yaml       # API Deployment tanımı
+│   │   ├── api-service.yaml          # API Service tanımı
+│   │   ├── producer-deployment.yaml  # Producer Deployment tanımı
+│   │   ├── consumer-deployment.yaml  # Consumer Deployment tanımı
+│   │   ├── broker-deployment.yaml    # Kafka Broker Deployment tanımı
+│   │   ├── broker-service.yaml       # Kafka Broker Service tanımı
+│   │   ├── mongodb-deployment.yaml   # MongoDB Deployment tanımı
+│   │   ├── mongodb-service.yaml      # MongoDB Service tanımı
+│   ├── Chart.yaml                # Helm Chart meta bilgileri
+│   ├── values.yaml               # Helm Chart değer dosyası
+├── docker-compose.yml           # Docker Compose yapılandırması
+└── kafka-0.1.0.tgz              # Helm Chart paketi
+
+
+
+🎯 Teknolojiler
+
+Apache Kafka
+MongoDB
+Node.js
+Docker
+Kubernetes
+Helm

@@ -37,6 +37,6 @@ spec:
               value: kafka_events
             - name: MONGO_URI
               value: mongodb://mongodb:27017
-          image: ekrem0691/consumer
+          image: ekrem0691/consumer:latest
           name: consumer
       restartPolicy: Always

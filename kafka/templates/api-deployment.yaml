@@ -30,7 +30,7 @@ spec:
               value: mongodb://mongodb:27017
             - name: PORT
               value: "3000"
-          image: ekrem0691/api
+          image: ekrem0691/api:latest
           name: api
           ports:
             - containerPort: 3000

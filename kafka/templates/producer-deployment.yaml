@@ -29,6 +29,6 @@ spec:
               value: broker:9092
             - name: KAFKA_TOPIC
               value: events_topic
-          image: ekrem0691/producer
+          image: ekrem0691/producer:latest
           name: producer
       restartPolicy: Always

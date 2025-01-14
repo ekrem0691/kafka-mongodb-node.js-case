@@ -77,38 +77,51 @@ Bu proje, event-driven bir mimariyi uygulamak için tasarlanmıştır. Projede *
 ## 📂 Proje Dosya Yapısı
 
 kafka-mongodb-node.js-case/
-├── api/                         # REST API Servisi
-│   ├── Dockerfile               # API için Docker tanımı
-│   ├── index.js                 # API'nin ana dosyası
-│   ├── package.json             # API bağımlılık dosyası
-│   ├── package-lock.json
-│   └── node_modules/            # Bağımlılık modülleri
-├── consumer/                    # Kafka Consumer Servisi
-│   ├── Dockerfile               # Consumer için Docker tanımı
-│   ├── index.js                 # Consumer'ın ana dosyası
-│   ├── package.json             # Consumer bağımlılık dosyası
-│   ├── package-lock.json
-│   └── node_modules/            # Bağımlılık modülleri
-├── producer/                    # Kafka Producer Servisi
-│   ├── Dockerfile               # Producer için Docker tanımı
-│   ├── index.js                 # Producer'ın ana dosyası
-│   ├── package.json             # Producer bağımlılık dosyası
-│   ├── package-lock.json
-│   └── node_modules/            # Bağımlılık modülleri
-├── kafka/                       # Helm Chart Yapılandırmaları
-│   ├── templates/               # Kubernetes Manifest Dosyaları
-│   │   ├── api-deployment.yaml       # API Deployment tanımı
-│   │   ├── api-service.yaml          # API Service tanımı
-│   │   ├── producer-deployment.yaml  # Producer Deployment tanımı
-│   │   ├── consumer-deployment.yaml  # Consumer Deployment tanımı
-│   │   ├── broker-deployment.yaml    # Kafka Broker Deployment tanımı
-│   │   ├── broker-service.yaml       # Kafka Broker Service tanımı
-│   │   ├── mongodb-deployment.yaml   # MongoDB Deployment tanımı
-│   │   ├── mongodb-service.yaml      # MongoDB Service tanımı
-│   ├── Chart.yaml                # Helm Chart meta bilgileri
-│   ├── values.yaml               # Helm Chart değer dosyası
-├── docker-compose.yml           # Docker Compose yapılandırması
-└── kafka-0.1.0.tgz              # Helm Chart paketi
+│
+├── api/                         # REST API Service
+│   ├── Dockerfile               # Docker configuration for the API
+│   ├── index.js                 # Main application file for API
+│   ├── package.json             # API dependencies
+│   ├── package-lock.json        # Dependency lock file
+│   └── node_modules/            # Installed dependencies
+│
+├── consumer/                    # Kafka Consumer Service
+│   ├── Dockerfile               # Docker configuration for the Consumer
+│   ├── index.js                 # Main consumer logic
+│   ├── package.json             # Consumer dependencies
+│   ├── package-lock.json        # Dependency lock file
+│   └── node_modules/            # Installed dependencies
+│
+├── producer/                    # Kafka Producer Service
+│   ├── Dockerfile               # Docker configuration for the Producer
+│   ├── index.js                 # Main producer logic
+│   ├── package.json             # Producer dependencies
+│   ├── package-lock.json        # Dependency lock file
+│   └── node_modules/            # Installed dependencies
+│
+├── kafka/                       # Helm Chart for Kubernetes Deployments
+│   ├── templates/               # Kubernetes YAML manifests
+│   │   ├── api-deployment.yaml        # API Deployment definition
+│   │   ├── api-service.yaml           # API Service definition
+│   │   ├── producer-deployment.yaml   # Producer Deployment definition
+│   │   ├── consumer-deployment.yaml   # Consumer Deployment definition
+│   │   ├── broker-deployment.yaml     # Kafka Broker Deployment definition
+│   │   ├── broker-service.yaml        # Kafka Broker Service definition
+│   │   ├── mongodb-deployment.yaml    # MongoDB Deployment definition
+│   │   ├── mongodb-service.yaml       # MongoDB Service definition
+│   │   ├── controller-deployment.yaml # Controller Deployment definition
+│   │   └── controller-service.yaml    # Controller Service definition
+│   ├── Chart.yaml               # Helm Chart metadata
+│   └── values.yaml              # Configurable values for Helm deployments
+│
+├── create-kube-cluster-terraform/ # AWS Infrastructure Management
+│   ├── main.tf                    # Main Terraform configuration for the Kubernetes cluster
+│   ├── master.sh                  # Bootstrap script for Kubernetes master
+│   ├── worker.sh                  # Bootstrap script for Kubernetes workers
+│   └── cfn-template-to-create-k8s-cluster.yml # AWS CloudFormation template
+│
+├── docker-compose.yml             # Docker Compose configuration for local development
+└── kafka-0.1.0.tgz                # Packaged Helm Chart for Kafka
 
 
 

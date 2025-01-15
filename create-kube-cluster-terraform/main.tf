@@ -17,8 +17,8 @@ data "aws_region" "current" {}
 
 locals {
   # change here, optional
-  name = "clarusway"
-  keyname = "clarus"
+  name = "ekrem"
+  keyname = "ekremkey"
   instancetype = "t3a.medium"
   ami = "ami-080e1f13689e07408"
 }
